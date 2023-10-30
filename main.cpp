@@ -11,11 +11,11 @@ private:
     string nume;
     string marime;
     string tip_sport;
-    double pret;
+    double pret{};
 
 public:
     Produs(string nume, double pret,string  marime,string  tip_sport) : nume(std::move(nume)), marime(std::move(marime)) ,tip_sport(std::move(tip_sport)), pret(pret){}
-    Produs(const Produs& other) : nume(other.nume), marime(other.marime) ,tip_sport(other.tip_sport), pret(other.pret) {}
+    Produs() =default;
     Produs& operator=(const Produs& other)
     {
         if (this != &other)
@@ -51,7 +51,7 @@ private:
 public:
 
     explicit Client(string  nume) : nume(std::move(nume)) {}
-    Client(const Client& other) : nume(other.nume), cosCumparaturi(other.cosCumparaturi) {}
+    Client() = default;
 
     Client& operator=(const Client& other) {
         if (this != &other) {
@@ -91,7 +91,7 @@ private:
     vector<Produs> produse;
 public:
     CosCumparaturi() = default;
-    CosCumparaturi(const CosCumparaturi& other) : produse(other.produse) {}
+
     CosCumparaturi& operator=(const CosCumparaturi& other)
     {
         if (this != &other)
