@@ -30,7 +30,7 @@ public:
 
     ~Produs() = default;
 
-    // const string& getNume() const { return nume; }
+    [[nodiscard]] const string& getNume() const { return nume; }
     [[maybe_unused]] [[nodiscard]] double getPret() const { return pret; }
 
     [[maybe_unused]] [[nodiscard]] const string& getMarime() const { return marime; }
@@ -48,7 +48,6 @@ public:
 class Client {
 private:
     string nume;
-    vector<Produs> cosCumparaturi;
 public:
 
     explicit Client(string  nume) : nume(std::move(nume)) {}
@@ -62,8 +61,7 @@ public:
         return *this;
     }
 
-    // Destructorul clasei Client. Este generat implicit.Deoarece nu utilizam
-    //alocare dinamică de resurse sau alte acțiuni speciale care să necesite un destructor definit explicit
+
     ~Client() = default;
 
     void adaugaProdusInCos(const Produs& produs) {
@@ -84,6 +82,8 @@ public:
         }
         return os;
     }
+
+    vector<Produs> cosCumparaturi;
 };
 
 class [[maybe_unused]] CosCumparaturi {
@@ -147,10 +147,13 @@ int main() {
     client3.adaugaProdusInCos(produs5);
     clienti.push_back(client3);
 
-    // Afișarea informațiilor despre fiecare client și conținutul coșului său
 
     for (const auto & client : clienti) {
-        cout << "Informații despre " << client.getNume() << ":\n" << client << endl;
+        cout << "Informații despre clientul: " << client.getNume() << ":\n";
+        cout << "Cos de cumparaturi:\n";
+        for (const Produs& produs : client.cosCumparaturi) {
+            cout << "  -" << produs.getNume() << ", Pret: " << produs.getPret() << " RON, Sport: " << produs.getTip_sport() << "\n";
+        }
         cout << "-----------------------------------" << endl;
     }
 
