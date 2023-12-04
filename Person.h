@@ -158,7 +158,7 @@ public:
     [[nodiscard]] std::string greeting() const override { return std::string("Welcome ") + name + std::string("!"); };
 
     void performAction() const override {
-        std::cout << std::string("Site employee ") + name + std::string(" is making a purchase.") << std::endl;
+        std::cout << std::string("Site employee ") + name + std::string(" is working on the site.") << std::endl;
     }
 };
 
@@ -209,7 +209,7 @@ public:
     [[nodiscard]] std::string greeting() const override { return std::string("Welcome ") + name + std::string("!"); };
 
     void performAction() const override {
-        std::cout << std::string("Shop employee ") + name + std::string(" is making a purchase.") << std::endl;
+        std::cout << std::string("Shop employee ") + name + std::string(" is looking for a product availability in another shop .") << std::endl;
     }
 };
 
