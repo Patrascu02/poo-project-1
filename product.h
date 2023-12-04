@@ -53,8 +53,9 @@ public:
         instanceCount++;
     }
 
+    Product& operator=(const Product& other) = default;
     Product(const Product &other)
-            : name(other.name), size(other.size), sportType(other.sportType), price(other.price) {}
+           : name(other.name), size(other.size), sportType(other.sportType), price(other.price) {}
 
     friend std::ostream &operator<<(std::ostream &os, const Product &product) {
         os << "Product: " << product.name << ", Price: " << product.price
