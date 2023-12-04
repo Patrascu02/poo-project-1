@@ -7,14 +7,14 @@
 
 class EmptyNameException : public std::exception {
 public:
-    [[nodiscard]] const char* what() const noexcept override {
+    [[nodiscard]] const char *what() const noexcept override {
         return "You left the name section empty!!!.";
     }
 };
 
 class AbstractPersonException : public std::exception {
 public:
-    [[nodiscard]] const char* what() const noexcept override {
+    [[nodiscard]] const char *what() const noexcept override {
         return "Cannot instantiate an abstract person.";
     }
 };
@@ -24,23 +24,28 @@ private:
     std::string name;
 
 public:
-    explicit Person(const std::string& name) : name(name) {
+    explicit Person(const std::string &name) : name(name) {
         if (name.empty()) {
             throw EmptyNameException();
         }
     }
 
-    Person(const Person& other) : name(other.name) {}
+    Person(const Person &other) : name(other.name) {}
 
-    Person& operator=(const Person& other) {
+    Person &operator=(const Person &other) {
         if (this != &other) {
             name = other.name;
         }
         return *this;
     }
 
-    [[nodiscard]] virtual std::string greeting() const { return std::string("Sorry ") + name + ", we do not recognise you as a client or an employee, please create an account! "; }
-    [[nodiscard]] virtual std::string getrole() const { return "We do not recognise you as a client or an employee, please create an account! "; }
+    [[nodiscard]] virtual std::string greeting() const {
+        return std::string("Sorry ") + name +
+               ", we do not recognise you as a client or an employee, please create an account! ";
+    }
+
+    [[nodiscard]] virtual std::string
+    getrole() const { return "We do not recognise you as a client or an employee, please create an account! "; }
 
     virtual void performAction() const = 0;
 
@@ -56,17 +61,19 @@ private:
     static int totalItemsAdded;
 
 public:
-    explicit Client(const std::string& name, const std::string& username, const std::string& password)
+    explicit Client(const std::string &name, const std::string &username, const std::string &password)
             : Person(name), name(name), username(username), password(password) {
         if (name.empty()) {
             throw EmptyNameException();
         }
     }
 
-    Client(const Client& other)
-            : Person(other), name(other.name), shoppingBasket(other.shoppingBasket), username(other.username), password(other.password) {}
 
-    Client& operator=(const Client& other) {
+    Client(const Client &other)
+            : Person(other), name(other.name), shoppingBasket(other.shoppingBasket), username(other.username),
+              password(other.password) {}
+
+    Client &operator=(const Client &other) {
         if (this != &other) {
             Person::operator=(other);
             name = other.name;
@@ -79,7 +86,7 @@ public:
 
     ~Client() override = default;
 
-    void addProductToBasket(const Product& product) {
+    void addProductToBasket(const Product &product) {
         shoppingBasket.addProduct(product);
         totalItemsAdded++;
     }
@@ -88,14 +95,17 @@ public:
         return totalItemsAdded;
     }
 
-    friend std::ostream& operator<<(std::ostream& os, const Client& client) {
+    friend std::ostream &operator<<(std::ostream &os, const Client &client) {
         os << "Name: " << client.name << "\n";
         client.shoppingBasket.displayBasket();
         return os;
     }
 
-    [[nodiscard]] std::string getrole() const override { return std::string("CLIENT"); } // NOLINT(*-return-braced-init-list)
+    [[nodiscard]] std::string getrole() const override {
+        return std::string("CLIENT");
+    } // NOLINT(*-return-braced-init-list)
     [[nodiscard]] std::string greeting() const override { return std::string("Welcome ") + name + std::string("!"); };
+
     void performAction() const override {
         std::cout << std::string("Client ") + name + std::string(" is making a purchase.") << std::endl;
     }
@@ -109,20 +119,22 @@ private:
     std::string role;
 
 public:
-    explicit site_Employee(const std::string& name, const std::string& site_employee_id, const std::string& site_employee_password, const std::string& role)
-            : Person(name), name(name), site_employee_id(site_employee_id), site_employee_password(site_employee_password), role(role) {
+    explicit site_Employee(const std::string &name, const std::string &site_employee_id,
+                           const std::string &site_employee_password, const std::string &role)
+            : Person(name), name(name), site_employee_id(site_employee_id),
+              site_employee_password(site_employee_password), role(role) {
         if (name.empty()) {
             throw EmptyNameException();
         }
     }
 
-    site_Employee(const site_Employee& other)
+    site_Employee(const site_Employee &other)
             : Person(other), name(other.name), site_employee_id(other.site_employee_id),
               site_employee_password(other.site_employee_password), role(other.role) {}
 
     ~site_Employee() override = default;
 
-    site_Employee& operator=(const site_Employee& other) {
+    site_Employee &operator=(const site_Employee &other) {
         if (this != &other) {
             Person::operator=(other);
             name = other.name;
@@ -133,15 +145,18 @@ public:
         return *this;
     }
 
-    friend std::ostream& operator<<(std::ostream& os, const site_Employee& site_employee) {
+    friend std::ostream &operator<<(std::ostream &os, const site_Employee &site_employee) {
         os << "Employee: " << site_employee.name << "\n";
         os << "ID: " << site_employee.site_employee_id << "\n";
         os << "Role: " << site_employee.role << "\n";
         return os;
     }
 
-    [[nodiscard]] std::string getrole() const override { return std::string("SITE EMPLOYEE"); } // NOLINT(*-return-braced-init-list)
+    [[nodiscard]] std::string getrole() const override {
+        return std::string("SITE EMPLOYEE");
+    } // NOLINT(*-return-braced-init-list)
     [[nodiscard]] std::string greeting() const override { return std::string("Welcome ") + name + std::string("!"); };
+
     void performAction() const override {
         std::cout << std::string("Site employee ") + name + std::string(" is making a purchase.") << std::endl;
     }
@@ -155,20 +170,22 @@ private:
     std::string shop_location;
 
 public:
-    explicit shop_Employee(const std::string& name, const std::string& shop_Employee_username, const std::string& password, const std::string& shoplocation)
-            : Person(name), name(name), shop_Employee_username(shop_Employee_username), password(password), shop_location(shoplocation) {
+    explicit shop_Employee(const std::string &name, const std::string &shop_Employee_username,
+                           const std::string &password, const std::string &shoplocation)
+            : Person(name), name(name), shop_Employee_username(shop_Employee_username), password(password),
+              shop_location(shoplocation) {
         if (name.empty()) {
             throw EmptyNameException();
         }
     }
 
-    shop_Employee(const shop_Employee& other)
+    shop_Employee(const shop_Employee &other)
             : Person(other), name(other.name), shop_Employee_username(other.shop_Employee_username),
               password(other.password), shop_location(other.shop_location) {}
 
     ~shop_Employee() override = default;
 
-    shop_Employee& operator=(const shop_Employee& other) {
+    shop_Employee &operator=(const shop_Employee &other) {
         if (this != &other) {
             Person::operator=(other);
             name = other.name;
@@ -179,15 +196,18 @@ public:
         return *this;
     }
 
-    friend std::ostream& operator<<(std::ostream& os, const shop_Employee& shop_employee) {
+    friend std::ostream &operator<<(std::ostream &os, const shop_Employee &shop_employee) {
         os << "Name: " << shop_employee.name << "\n";
         os << "Shop employee username :" << shop_employee.shop_Employee_username << "\n";
         os << "Shop location :" << shop_employee.shop_location << "\n";
         return os;
     }
 
-    [[nodiscard]] std::string getrole() const override { return std::string("SHOP EMPLOYEE"); } // NOLINT(*-return-braced-init-list)
+    [[nodiscard]] std::string getrole() const override {
+        return std::string("SHOP EMPLOYEE");
+    } // NOLINT(*-return-braced-init-list)
     [[nodiscard]] std::string greeting() const override { return std::string("Welcome ") + name + std::string("!"); };
+
     void performAction() const override {
         std::cout << std::string("Shop employee ") + name + std::string(" is making a purchase.") << std::endl;
     }
