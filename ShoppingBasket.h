@@ -12,11 +12,11 @@ private:
 public:
     ShoppingBasket() = default;
 
-    ShoppingBasket(const ShoppingBasket &other) {
-        products = other.products;
+    ShoppingBasket(const ShoppingBasket& other) : products(other.products) {
+        // Use initialization list to initialize products
     }
 
-    ShoppingBasket &operator=(const ShoppingBasket &other) {
+    ShoppingBasket& operator=(const ShoppingBasket& other) {
         if (this != &other) {
             products = other.products;
         }
@@ -25,13 +25,13 @@ public:
 
     ~ShoppingBasket() = default;
 
-    void addProduct(const Product &product) {
+    void addProduct(const Product& product) {
         products.push_back(product);
     }
 
     void displayBasket() const {
         std::cout << "Shopping basket:\n";
-        for (const Product &product: products) {
+        for (const Product& product : products) {
             std::cout << "  -" << product << "\n";
         }
     }
