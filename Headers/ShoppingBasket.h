@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <vector>
-#include "../cmake-build-debug/product.h"
+#include "product.h"
 
 /**
  * @class ShoppingBasket
