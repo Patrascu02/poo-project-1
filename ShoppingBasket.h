@@ -19,7 +19,7 @@ public:
      * @brief Default constructor for the ShoppingBasket class
      */
     ShoppingBasket() = default;
-
+    void addProduct(const Product<std::string,double>&product);
     /**
      * @brief Copy constructor for the ShoppingBasket class
      * @param other Another ShoppingBasket object to copy from

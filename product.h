@@ -159,6 +159,10 @@ public:
         return Product<T, P>("122lk", "T-shirt", 129, "M", "Gym");
     }
 
+    static Product<T, P> createTee() {
+        return Product<T, P>("1ab", "Tee", 29, "S", "Tenis");
+    }
+
     static Product<T, P> createShorts() {
         return Product<T, P>("122l", "Shorts", 129, "L", "Gym");
     }
@@ -166,6 +170,15 @@ public:
     static Product<T, P> createBoxers() {
         return Product<T, P>("123k", "Boxers", 19, "M", "Running");
     }
+
+    static Product<T, P> createFootballShoes() {
+        return Product<T, P>("22a", "Football Shoes", 200, "44", "Football");
+    }
+
+    static Product<T, P> createBasketballShoes() {
+        return Product<T, P>("2a", "Basketball Shoes", 300, "34", "Basketball");
+    }
+
 };
 
 #endif //OOP_PRODUCT_H

@@ -33,3 +33,7 @@ void ShoppingBasket::displayBasket() const {
         std::cout << "  -" << product << "\n";
     }
 }
+void ShoppingBasket:: addProduct(const Product<std::string,double>&product)
+{
+    products.push_back(product);
+}

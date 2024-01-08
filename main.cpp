@@ -5,8 +5,11 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include "ShoppingBasket.h"
 #include "product.h"
 #include "Person.h"
+
+
 
 /**
  * @brief Function to find a product in a vector based on its ID
@@ -31,12 +34,16 @@ const Product<T, P>* verificare([[maybe_unused]] const std::string& ID, [[maybe_
 int main() {
 
 
+    ShoppingBasket basket;
+
     std::vector<Product<std::string, double>*> products;
 
     products.push_back(new Product<std::string, double>(ProductFactory<std::string, double>::createTShirt()));
     products.push_back(new Product<std::string, double>(ProductFactory<std::string, double>::createShorts()));
     products.push_back(new Product<std::string, double>(ProductFactory<std::string, double>::createBoxers()));
-
+    products.push_back(new Product<std::string, double>(ProductFactory<std::string, double>::createTee()));
+    products.push_back(new Product<std::string, double>(ProductFactory<std::string, double>::createFootballShoes()));
+    products.push_back(new Product<std::string, double>(ProductFactory<std::string, double>::createBasketballShoes()));
 
 
 
@@ -79,7 +86,18 @@ int main() {
 
                 switch (choice) {
                     case 1:
+                        for(const  Product<std::string,double>* product : products)
+                        {
+                            std::cout << *product << std::endl;
+                        }
+                        std :: cout <<"ID:";std::cin>>ID;
+                        std :: cout <<"PRODUCT:";std::cin>>NaMe;
+                        std :: cout <<"PRICE:";std::cin>>PRICE;
+                        std :: cout <<"SIZE:";std::cin>>SIZE;
+                        std :: cout <<"SPORT:";std::cin>>SPORTtype;
                         client->performAction();
+                        basket.addProduct(Product<std::string, double>(ID,NaMe,PRICE,SIZE,SPORTtype));
+                        basket.displayBasket();
                         break;
                     case 2:
                         std::cout << "Have a great day\n";
