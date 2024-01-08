@@ -3,7 +3,7 @@
  * @brief Implementation of the ShoppingBasket class.
  */
 
-#include "../Headers/ShoppingBasket.h"
+#include "ShoppingBasket.h"
 
 /**
  * @class ShoppingBasket

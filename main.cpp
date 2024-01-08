@@ -5,9 +5,9 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "Headers/ShoppingBasket.h"
-#include "Headers/product.h"
-#include "Headers/Person.h"
+#include "ShoppingBasket.h"
+#include "product.h"
+#include "Person.h"
 
 
 

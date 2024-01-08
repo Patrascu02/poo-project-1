@@ -3,8 +3,8 @@
  * @brief Implementation of classes representing persons in a store management system.
  */
 
-#include "../Headers/Person.h"
-#include "../Headers/product.h"
+#include "Person.h"
+#include "product.h"
 
 /**
  * @class Person
