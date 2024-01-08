@@ -1,98 +1,45 @@
+/**
+ * @file main.cpp
+ * @brief Entry point of the program, demonstrating an object-oriented store management system.
+ */
 #include <iostream>
-#include <string>
 #include <vector>
-// For std::exception
+#include <algorithm>
 #include "product.h"
 #include "ShoppingBasket.h"
 #include "Person.h"
 
-// Counter for the total number of Product instances
-int Product::instanceCount = 0;
+/**
+ * @brief Function to find a product in a vector based on its ID
+ * @param ID ID of the product to find
+ * @param products Vector of pointers to Product objects
+ * @return Pointer to the found product or nullptr if not found
+ */
+template<typename T, typename P>
+const Product<T, P>* verificare([[maybe_unused]] const std::string& ID, [[maybe_unused]] const std::vector<Product<T, P>*>& products) {
+    for (const auto& product : products) {
+        if (ID == product->GetID()) {
+            return product;
+        }
+    }
+    return nullptr;
+}
 
-// Counter for the total number of items added by all clients
-int Client::totalItemsAdded = 0;
-
+/**
+ * @brief Main function demonstrating the store management system
+ * @return Exit code
+ */
 int main() {
-    // Creating instances of products
-    Product product1("Football", 50.0, "L", "Football");
-    Product product2("Sports shirt", 25.0, "M", "Fitness");
-    Product product3("Tennis racket", 120.0, "M", "Tennis");
-    Product product4("Boxing gloves", 35.0, "M", "Boxing");
-    Product product5("Shorts", 15.0, "S", "Fitness");
 
-    // Vector to store instances of clients
-    std::vector<Client> clients;
 
-    std::cout << "--------------------------------------------" << std::endl;
-    // Displaying the total number of Product instances created
-    std::cout << "Total Product instances: " << Product::getInstanceCount() << "\n";
-    std::cout << "--------------------------------------------" << std::endl;
+    std::vector<Product<std::string, double>*> products;
 
-    // Creating instances of clients and adding products to their baskets
-    Client client1("Ionescu Mihnea", "mihus22", "mihu234");
-    client1.addProductToBasket(Product("Football", 50.0, "L", "Football"));
-    client1.addProductToBasket(Product("Tennis racket", 120.0, "M", "Tennis"));
-    client1.addProductToBasket(Product("Boxing gloves", 35.0, "M", "Boxing"));
-    clients.push_back(client1);
+    products.push_back(new Product<std::string, double>(ProductFactory<std::string, double>::createTShirt()));
+    products.push_back(new Product<std::string, double>(ProductFactory<std::string, double>::createShorts()));
+    products.push_back(new Product<std::string, double>(ProductFactory<std::string, double>::createBoxers()));
 
-    Client client2("Vlad Raluca", "raluca09", "2341");
-    client2.addProductToBasket(Product("Sports shirt", 25.0, "M", "Fitness"));
-    client2.addProductToBasket(Product("Boxing gloves", 35.0, "M", "Boxing"));
-    clients.push_back(client2);
 
-    Client client3("Patrascu Alexandru", "patrascu02", "121212");
-    client3.addProductToBasket(Product("Football", 50.0, "L", "Football"));
-    client3.addProductToBasket(Product("Shorts", 15.0, "S", "Fitness"));
-    clients.push_back(client3);
 
-    // Displaying information about each client
-    for (const auto &client: clients) {
-        std::cout << client.getrole() << std::endl << std::endl;
-        std::cout << client.greeting() << std::endl;
-        std::cout << "Information about the client" << ":\n";
-        std::cout << client;
-        client.performAction();
-        std::cout << "------------------------------" << std::endl;
-    }
-
-    std::vector<site_Employee> site_employees;
-
-    site_Employee s_e1("Popa Andrei", "123J", "3377k>..", "Website design");
-    site_employees.push_back(s_e1);
-
-    site_Employee s_e2("Trestioreanu Marius", "2334kl", "76:'[.,", "Website mentenance");
-    site_employees.push_back(s_e2);
-
-    site_Employee s_e3("Cristina Mihaela", "332Lo", "123789[]", "Website mentenance");
-    site_employees.push_back(s_e3);
-
-    for (const auto &site_employee: site_employees) {
-        std::cout << site_employee.getrole() << std::endl << std::endl;
-        std::cout << site_employee.greeting() << std::endl;
-        std::cout << "Information about the site employee" << ":\n";
-        std::cout << site_employee << std::endl;
-        site_employee.performAction();
-        std::cout << "------------------------------" << std::endl;
-    }
-
-    std::vector<shop_Employee> shop_employees;
-
-    shop_Employee e1("Calin Mario", "Calin12", "12debdch", "Baneasa mall");
-    shop_employees.push_back(e1);
-
-    shop_Employee e2("Neagu Andrei", "Andrei76", "jedwd6dby6w", "AFI mall");
-    shop_employees.push_back(e2);
-
-    shop_Employee e3("Stancu Matei", "STancu", "1;[;dk", "Plaza Bucuresti mall");
-    shop_employees.push_back(e3);
-
-    for (const auto &shop_employee: shop_employees) {
-        std::cout << shop_employee.getrole() << std::endl << std::endl;
-        std::cout << shop_employee.greeting() << std::endl;
-        std::cout << shop_employee << std::endl;
-        shop_employee.performAction();
-        std::cout << "------------------------------" << std::endl;
-    }
 
     // Creating an instance of a Person (base class)
     std::vector<Person *> people;
@@ -102,9 +49,148 @@ int main() {
     people.push_back(new shop_Employee("Badea Elena", "ele007", "p123789", "Megamall"));
 
 
-    for (const auto &person: people) {
-        person->performAction();
+// Iterating through each person (employee or client)
+    for (const auto &person : people) {
+        // Displaying the role and a greeting message for the person
+        std::cout<<person->getrole();
+        std::cout << std::endl;
+        std::cout<<person->greeting();
+        std::cout << std::endl;
+
+        // Variables for user input and product handling
+        std :: string ID;
+        std :: string SIZE;
+        std :: string SPORT;
+        std :: string PRODUCT;
+        double PRICE;
+        int number;
+        int i;
+        const Product<std::string, double>* foundProduct;
+        // Handling actions based on the type of person (client, site employee, or shop employee)
+        if (typeid(*person) == typeid(Client)) {
+            const Client* client = dynamic_cast<const Client*>(person);
+            int choice;
+            do {
+                // Displaying menu for client actions
+
+                std::cout << "\nChoose an action for the client:\n";
+                std::cout << "1. Add product to basket\n";
+                std::cout << "2. I finished shopping.\n";
+                std::cin >> choice;
+
+                switch (choice) {
+                    case 1:
+                        client->performAction();
+                        break;
+                    case 2:
+                        std::cout << "Have a great day\n";
+                        break;
+                    default:
+                        std::cout << "Invalid choice\n";
+                }
+            } while (choice != 2);
+        } else if (typeid(*person) == typeid(site_Employee)) {
+            const site_Employee* siteEmployee = dynamic_cast<const site_Employee*>(person);
+            int choice;
+            do {
+                // Displaying menu for site employee actions
+
+                std::cout << "Choose an action for the site employee:\n";
+                std::cout << "1. Work on the site problems\n";
+                std::cout << "2. Remove a product that isn't available until restocking the shop\n";
+                std::cout << "3. Apply price reductions to all products\n";
+                std::cout << "4. Add new products.\n";
+                std::cout << "5. I finished maintenance.\n";
+                std::cin >> choice;
+
+                switch (choice) {
+                    case 1:
+                        siteEmployee->performAction();
+                        break;
+                    case 2:
+                        // Displaying available products and prompting for user input
+
+                        for(const auto &product : products)
+                        {
+                            std::cout << *product << std::endl;
+                        }
+                        std::cout<<"Product's id  that isn't available anymore:";
+                        std::cin >> ID;
+                        foundProduct = verificare(ID, products);
+                        if (foundProduct != nullptr) {
+                           products.erase(std::remove(products.begin(),products.end(),foundProduct));
+                            Product<std::string, double>::decreaseInstanceCount();
+                        } else {
+                            std::cout << "No matching ID's\n";
+                        }
+                        break;
+                    case 3:
+                        // Displaying available products and prompting for user input
+
+                        for(const auto &product : products)
+                        {
+                            std::cout << *product << std::endl;
+                        }
+                        double discountPercentage;
+                        std::cout << "Reduction percentage for all products: ";
+                        std::cin >> discountPercentage;
+
+                        Product<std::string, double>::applyDiscountToAll(discountPercentage, products);
+
+                        break;
+                    case 4:
+                        // Displaying available products and prompting for user input
+
+                        for(const auto &product : products)
+                        {
+                            std::cout << *product << std::endl;
+                        }
+                        std::cout<<"How many products you want to add?";
+                        std::cin >> number;
+                        for(i=1;i<=number;i++)
+                        {
+                            std :: cout <<"ID:";std::cin>>ID;
+                            std :: cout <<"PRODUCT:";std::cin>>PRODUCT;
+                            std :: cout <<"PRICE:";std::cin>>PRICE;
+                            std :: cout <<"SIZE:";std::cin>>SIZE;
+                            std :: cout <<"SPORT:";std::cin>>SPORT;
+                            products.push_back(new Product(ID,PRODUCT,PRICE,SIZE,SPORT));
+                        }
+                        break;
+                    case 5:
+                        std::cout << "Thanks for helping us!\n";
+                        break;
+                    default:
+                        std::cout << "Invalid choice\n";
+                }
+            } while (choice != 5);
+        } else if (typeid(*person) == typeid(shop_Employee)) {
+            const shop_Employee* shopEmployee = dynamic_cast<const shop_Employee*>(person);
+            int choice;
+            do {
+                // Displaying menu for shop employee actions
+
+                std::cout << "Choose an action for the shop employee:\n";
+                std::cout << "1. Perform shop employee-specific action\n";
+                std::cout << "2. I finished looking for a product availability.\n";
+                std::cin >> choice;
+
+                switch (choice) {
+                    case 1:
+                        shopEmployee->performAction();
+                        break;
+                    case 2:
+                        std::cout << "Have a nice day!\n";
+                        break;
+                    default:
+                        std::cout << "Invalid choice\n";
+                }
+            } while (choice != 2);
+        }
+
+        std::cout << "------------------------------" << std::endl;
     }
+    // Deleting allocated memory for dynamically created objects
 
     for (const auto &person: people) {
         delete person;
@@ -112,12 +198,13 @@ int main() {
 
     std::cout << "--------------------------------------------" << std::endl;
     // Displaying the total number of items added by all clients
-    std::cout << "Total items added by all clients today: " << Client::getTotalItemsAdded() << "\n";
+    std::cout << "Total items in the shop: " << Product<std::string, double>::getInstanceCount() << "\n";
+
     std::cout << "--------------------------------------------" << std::endl;
 
     try {
         // Example of creating a product with a negative price
-        Product invalidPriceProduct("Invalid Price Product", -10.0, "M", "InvalidSport");
+        Product<std::string, double> invalidPriceProduct("111", "Invalid Price Product", -10.0, "M", "InvalidSport");
     } catch (const std::exception &ex) {
         // Handling the exception if product creation fails
         std::cerr << "Exception caught: " << ex.what() << '\n';
@@ -125,11 +212,12 @@ int main() {
 
     try {
         // Example of creating a product with an invalid sport type
-        Product invalidSportProduct("Invalid Sport Product", 20.0, "L", "");
+        Product<std::string, double> invalidSportProduct("112op", "Invalid Sport Product", 20.0, "L", "");
     } catch (const std::exception &ex) {
         // Handling the exception if product creation fails
         std::cerr << "Exception caught: " << ex.what() << '\n';
     }
+    // Handling exceptions during client creation
 
     try {
         Client client("", "m123", "00000123");
@@ -142,3 +230,4 @@ int main() {
 
     return 0;
 }
+

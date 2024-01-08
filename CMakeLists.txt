@@ -94,6 +94,9 @@ add_executable(${PROJECT_NAME} main.cpp
         product.h
         ShoppingBasket.h
         Person.h
+        product.cpp
+        Person.cpp
+        ShoppingBasket.cpp
 )
 
 ###############################################################################
@@ -139,3 +142,4 @@ set_custom_stdlib_and_sanitizers(${PROJECT_NAME} true)
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 # install(DIRECTORY some_dir1 some_dir2 DESTINATION bin)
 # install(FILES some_file1.txt some_file2.md DESTINATION bin)
+

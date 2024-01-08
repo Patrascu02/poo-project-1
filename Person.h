@@ -1,116 +1,167 @@
-//
-// Created by alexp on 27/11/2023.
-//
+/**
+ * @file person.h
+ * @brief Definition of the Person, Client, site_Employee, and shop_Employee classes.
+ */
 
 #ifndef OOP_PERSON_H
 #define OOP_PERSON_H
 
+#include <iostream>
+#include <string>
+#include <vector>
+#include "ShoppingBasket.h"
+#include "product.h"
+
+/**
+ * @class EmptyNameException
+ * @brief Exception class for an empty name field.
+ */
 class EmptyNameException : public std::exception {
 public:
+    /**
+     * @return Error message for an empty name field.
+     */
     [[nodiscard]] const char *what() const noexcept override {
         return "You left the name section empty!!!.";
     }
 };
 
+/**
+ * @class AbstractPersonException
+ * @brief Exception class for attempting to instantiate an abstract person.
+ */
 class AbstractPersonException : public std::exception {
 public:
+    /**
+     * @return Error message for attempting to instantiate an abstract person.
+     */
     [[nodiscard]] const char *what() const noexcept override {
         return "Cannot instantiate an abstract person.";
     }
 };
 
+/**
+ * @class Person
+ * @brief Represents a generic person in the store management system.
+ */
 class Person {
 private:
     std::string name;
 
 public:
-    explicit Person(const std::string &name) : name(name) {
-        if (name.empty()) {
-            throw EmptyNameException();
-        }
-    }
+    /**
+     * @brief Constructor for the Person class.
+     * @param name The name of the person.
+     */
+    explicit Person(const std::string &name);
 
-    Person(const Person &other) : name(other.name) {}
+    /**
+     * @brief Copy constructor for Person.
+     * @param other The Person object to copy.
+     */
+    Person(const Person &other);
 
-    Person &operator=(const Person &other) {
-        if (this != &other) {
-            name = other.name;
-        }
-        return *this;
-    }
+    /**
+     * @brief Assignment operator for Person.
+     * @param other The Person object to assign.
+     * @return Reference to the assigned object.
+     */
+    Person &operator=(const Person &other);
 
-    [[nodiscard]] virtual std::string greeting() const {
-        return std::string("Sorry ") + name +
-               ", we do not recognise you as a client or an employee, please create an account! ";
-    }
+    /**
+     * @return Greeting message for the person.
+     */
+    [[nodiscard]] virtual std::string greeting() const;
 
-    [[nodiscard]] virtual std::string
-    getrole() const { return "We do not recognise you as a client or an employee, please create an account! "; }
+    /**
+     * @return Role of the person.
+     */
+    [[nodiscard]] virtual std::string getrole() const;
 
+    /**
+     * @brief Pure virtual function representing an action performed by the person.
+     */
     virtual void performAction() const = 0;
 
+    /**
+     * @brief Destructor for Person.
+     */
     virtual ~Person() = default;
 };
 
+/**
+ * @class Client
+ * @brief Represents a client in the store management system.
+ */
 class Client : public Person {
 private:
     std::string name;
     ShoppingBasket shoppingBasket;
     std::string username;
     std::string password;
-    static int totalItemsAdded;
+    std::vector<Product<std::string, double>> products;
 
 public:
-    explicit Client(const std::string &name, const std::string &username, const std::string &password)
-            : Person(name), name(name), username(username), password(password) {
-        if (name.empty()) {
-            throw EmptyNameException();
-        }
-    }
+    /**
+     * @brief Constructor for the Client class.
+     * @param name The name of the client.
+     * @param username The username of the client.
+     * @param password The password of the client.
+     */
+    explicit Client(const std::string &name, const std::string &username, const std::string &password);
 
+    /**
+     * @brief Copy constructor for Client.
+     * @param other The Client object to copy.
+     */
+    Client(const Client &other);
 
-    Client(const Client &other)
-            : Person(other), name(other.name), shoppingBasket(other.shoppingBasket), username(other.username),
-              password(other.password) {}
+    /**
+     * @brief Assignment operator for Client.
+     * @param other The Client object to assign.
+     * @return Reference to the assigned object.
+     */
+    Client &operator=(const Client &other);
 
-    Client &operator=(const Client &other) {
-        if (this != &other) {
-            Person::operator=(other);
-            name = other.name;
-            shoppingBasket = other.shoppingBasket;
-            username = other.username;
-            password = other.password;
-        }
-        return *this;
-    }
+    /**
+     * @brief Adds a product to the client's shopping basket.
+     * @param product The product to add to the basket.
+     */
+    [[maybe_unused]] void addProductToBasket(Product<std::string, double> product);
 
+    /**
+     * @brief Overloaded stream insertion operator for Client.
+     * @param os The output stream.
+     * @param client The Client object to display.
+     * @return Reference to the output stream.
+     */
+    friend std::ostream &operator<<(std::ostream &os, const Client &client);
+
+    /**
+     * @return Role of the client.
+     */
+    [[nodiscard]] std::string getrole() const override;
+
+    /**
+     * @return Greeting message for the client.
+     */
+    [[nodiscard]] std::string greeting() const override;
+
+    /**
+     * @brief Performs a client-specific action.
+     */
+    void performAction() const override;
+
+    /**
+     * @brief Destructor for Client.
+     */
     ~Client() override = default;
-
-    void addProductToBasket(const Product &product) {
-        shoppingBasket.addProduct(product);
-        totalItemsAdded++;
-    }
-
-    static int getTotalItemsAdded() {
-        return totalItemsAdded;
-    }
-
-    friend std::ostream &operator<<(std::ostream &os, const Client &client) {
-        os << "Name: " << client.name << "\n";
-        client.shoppingBasket.displayBasket();
-        return os;
-    }
-
-    [[nodiscard]] std::string getrole() const override {
-        return std::string("CLIENT");
-    } // NOLINT(*-return-braced-init-list)
-    [[nodiscard]] std::string greeting() const override { return std::string("Welcome ") + name + std::string("!"); };
-
-    void performAction() const override {
-        std::cout << std::string("Client ") + name + std::string(" is making a purchase.") << std::endl;
-    }
 };
 
+/**
+ * @class site_Employee
+ * @brief Represents a site employee in the store management system.
+ */
 class site_Employee : public Person {
 private:
     std::string name;
@@ -119,49 +170,62 @@ private:
     std::string role;
 
 public:
+    /**
+     * @brief Constructor for the site_Employee class.
+     * @param name The name of the site employee.
+     * @param site_employee_id The ID of the site employee.
+     * @param site_employee_password The password of the site employee.
+     * @param role The role of the site employee.
+     */
     explicit site_Employee(const std::string &name, const std::string &site_employee_id,
-                           const std::string &site_employee_password, const std::string &role)
-            : Person(name), name(name), site_employee_id(site_employee_id),
-              site_employee_password(site_employee_password), role(role) {
-        if (name.empty()) {
-            throw EmptyNameException();
-        }
-    }
+                           const std::string &site_employee_password, const std::string &role);
 
-    site_Employee(const site_Employee &other)
-            : Person(other), name(other.name), site_employee_id(other.site_employee_id),
-              site_employee_password(other.site_employee_password), role(other.role) {}
+    /**
+     * @brief Copy constructor for site_Employee.
+     * @param other The site_Employee object to copy.
+     */
+    site_Employee(const site_Employee &other);
 
+    /**
+     * @brief Assignment operator for site_Employee.
+     * @param other The site_Employee object to assign.
+     * @return Reference to the assigned object.
+     */
+    site_Employee &operator=(const site_Employee &other);
+
+    /**
+     * @brief Overloaded stream insertion operator for site_Employee.
+     * @param os The output stream.
+     * @param site_employee The site_Employee object to display.
+     * @return Reference to the output stream.
+     */
+    friend std::ostream &operator<<(std::ostream &os, const site_Employee &site_employee);
+
+    /**
+     * @return Role of the site employee.
+     */
+    [[nodiscard]] std::string getrole() const override;
+
+    /**
+     * @return Greeting message for the site employee.
+     */
+    [[nodiscard]] std::string greeting() const override;
+
+    /**
+     * @brief Performs a site employee-specific action.
+     */
+    void performAction() const override;
+
+    /**
+     * @brief Destructor for site_Employee.
+     */
     ~site_Employee() override = default;
-
-    site_Employee &operator=(const site_Employee &other) {
-        if (this != &other) {
-            Person::operator=(other);
-            name = other.name;
-            site_employee_id = other.site_employee_id;
-            site_employee_password = other.site_employee_password;
-            role = other.role;
-        }
-        return *this;
-    }
-
-    friend std::ostream &operator<<(std::ostream &os, const site_Employee &site_employee) {
-        os << "Employee: " << site_employee.name << "\n";
-        os << "ID: " << site_employee.site_employee_id << "\n";
-        os << "Role: " << site_employee.role << "\n";
-        return os;
-    }
-
-    [[nodiscard]] std::string getrole() const override {
-        return std::string("SITE EMPLOYEE");
-    } // NOLINT(*-return-braced-init-list)
-    [[nodiscard]] std::string greeting() const override { return std::string("Welcome ") + name + std::string("!"); };
-
-    void performAction() const override {
-        std::cout << std::string("Site employee ") + name + std::string(" is working on the site.") << std::endl;
-    }
 };
 
+/**
+ * @class shop_Employee
+ * @brief Represents a shop employee in the store management system.
+ */
 class shop_Employee : public Person {
 private:
     std::string name;
@@ -170,47 +234,56 @@ private:
     std::string shop_location;
 
 public:
+    /**
+     * @brief Constructor for the shop_Employee class.
+     * @param name The name of the shop employee.
+     * @param shop_Employee_username The username of the shop employee.
+     * @param password The password of the shop employee.
+     * @param shop_location The location of the shop where the employee works.
+     */
     explicit shop_Employee(const std::string &name, const std::string &shop_Employee_username,
-                           const std::string &password, const std::string &shoplocation)
-            : Person(name), name(name), shop_Employee_username(shop_Employee_username), password(password),
-              shop_location(shoplocation) {
-        if (name.empty()) {
-            throw EmptyNameException();
-        }
-    }
+                           const std::string &password, const std::string &shop_location);
 
-    shop_Employee(const shop_Employee &other)
-            : Person(other), name(other.name), shop_Employee_username(other.shop_Employee_username),
-              password(other.password), shop_location(other.shop_location) {}
+    /**
+     * @brief Copy constructor for shop_Employee.
+     * @param other The shop_Employee object to copy.
+     */
+    shop_Employee(const shop_Employee &other);
 
+    /**
+     * @brief Assignment operator for shop_Employee.
+     * @param other The shop_Employee object to assign.
+     * @return Reference to the assigned object.
+     */
+    shop_Employee &operator=(const shop_Employee &other);
+
+    /**
+     * @brief Overloaded stream insertion operator for shop_Employee.
+     * @param os The output stream.
+     * @param shop_employee The shop_Employee object to display.
+     * @return Reference to the output stream.
+     */
+    friend std::ostream &operator<<(std::ostream &os, const shop_Employee &shop_employee);
+
+    /**
+     * @return Role of the shop employee.
+     */
+    [[nodiscard]] std::string getrole() const override;
+
+    /**
+     * @return Greeting message for the shop employee.
+     */
+    [[nodiscard]] std::string greeting() const override;
+
+    /**
+     * @brief Performs a shop employee-specific action.
+     */
+    void performAction() const override;
+
+    /**
+     * @brief Destructor for shop_Employee.
+     */
     ~shop_Employee() override = default;
-
-    shop_Employee &operator=(const shop_Employee &other) {
-        if (this != &other) {
-            Person::operator=(other);
-            name = other.name;
-            shop_Employee_username = other.shop_Employee_username;
-            password = other.password;
-            shop_location = other.shop_location;
-        }
-        return *this;
-    }
-
-    friend std::ostream &operator<<(std::ostream &os, const shop_Employee &shop_employee) {
-        os << "Name: " << shop_employee.name << "\n";
-        os << "Shop employee username :" << shop_employee.shop_Employee_username << "\n";
-        os << "Shop location :" << shop_employee.shop_location << "\n";
-        return os;
-    }
-
-    [[nodiscard]] std::string getrole() const override {
-        return std::string("SHOP EMPLOYEE");
-    } // NOLINT(*-return-braced-init-list)
-    [[nodiscard]] std::string greeting() const override { return std::string("Welcome ") + name + std::string("!"); };
-
-    void performAction() const override {
-        std::cout << std::string("Shop employee ") + name + std::string(" is looking for a product availability in another shop .") << std::endl;
-    }
 };
 
 #endif //OOP_PERSON_H
