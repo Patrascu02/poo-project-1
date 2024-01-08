@@ -90,13 +90,13 @@ endfunction()
 ###############################################################################
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
-add_executable(${PROJECT_NAME} main.cpp
-        product.h
-        ShoppingBasket.h
-        Person.h
-        product.cpp
-        Person.cpp
-        ShoppingBasket.cpp
+add_executable(${PROJECT_NAME} Sources/main.cpp
+        cmake-build-debug/product.h
+        Headers/ShoppingBasket.h
+        cmake-build-debug/Person.h
+        Sources/product.cpp
+        Sources/Person.cpp
+        Sources/ShoppingBasket.cpp
 )
 
 ###############################################################################

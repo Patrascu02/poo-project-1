@@ -3,8 +3,8 @@
  * @brief Implementation of classes representing persons in a store management system.
  */
 
-#include "Person.h"
-#include "product.h"
+#include "../cmake-build-debug/Person.h"
+#include "../cmake-build-debug/product.h"
 
 /**
  * @class Person

@@ -5,9 +5,9 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "ShoppingBasket.h"
-#include "product.h"
-#include "Person.h"
+#include "../Headers/ShoppingBasket.h"
+#include "../cmake-build-debug/product.h"
+#include "../cmake-build-debug/Person.h"
 
 
 
@@ -91,7 +91,7 @@ int main() {
                             std::cout << *product << std::endl;
                         }
                         std :: cout <<"ID:";std::cin>>ID;
-                        std :: cout <<"PRODUCT:";std::cin>>NaMe;
+                        std :: cout <<"Name:";std::cin>>NaMe;
                         std :: cout <<"PRICE:";std::cin>>PRICE;
                         std :: cout <<"SIZE:";std::cin>>SIZE;
                         std :: cout <<"SPORT:";std::cin>>SPORTtype;
