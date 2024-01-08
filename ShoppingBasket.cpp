@@ -25,8 +25,12 @@ ShoppingBasket::ShoppingBasket(const ShoppingBasket &other) : products(other.pro
 void ShoppingBasket::addProduct(Product<std::string, double> &product) {
     products.push_back(product);
 }
-
-
+ShoppingBasket& ShoppingBasket::operator=(const ShoppingBasket &other) {
+    if (this != &other) {
+        products=other.products;
+    }
+    return *this;
+}
 /**
  * @brief Displays the contents of the shopping basket
  */

@@ -58,9 +58,6 @@ Client &Client::operator=(const Client &other) {
     return *this;
 }
 
-[[maybe_unused]]void Client:: addProductToBasket(Product<std::string, double> product) {
-    shoppingBasket.addProduct(product);
-}
 
 std::ostream &operator<<(std::ostream &os, const Client &client) {
     os << "Name: " << client.name << "\n";
