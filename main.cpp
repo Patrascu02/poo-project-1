@@ -109,7 +109,7 @@ int main() {
                     case 2:
                         // Displaying available products and prompting for user input
 
-                        for(const auto &product : products)
+                        for(const  Product<std::string,double>* product : products)
                         {
                             std::cout << *product << std::endl;
                         }
@@ -127,7 +127,7 @@ int main() {
                     case 3:
                         // Displaying available products and prompting for user input
 
-                        for(const auto &product : products)
+                        for(const  Product<std::string,double>* product : products)
                         {
                             std::cout << *product << std::endl;
                         }
@@ -141,7 +141,7 @@ int main() {
                     case 4:
                         // Displaying available products and prompting for user input
 
-                        for(const auto &product : products)
+                        for(const  Product<std::string,double>* product : products)
                         {
                             std::cout << *product << std::endl;
                         }
