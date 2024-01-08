@@ -266,7 +266,7 @@ public:
     friend std::ostream &operator<<(std::ostream &os, const shop_Employee &shop_employee);
 
     /**
-     * @return Role of the shop employee.
+     * @return Role of the shop employee
      */
     [[nodiscard]] std::string getrole() const override;
 

@@ -221,7 +221,7 @@ int main() {
         // Handling the exception if product creation fails
         std::cerr << "Exception caught: " << ex.what() << '\n';
     }
-    // Handling exceptions during client creation
+    // Handling exceptions during client creation.
 
     try {
         Client client("", "m123", "00000123");

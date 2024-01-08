@@ -27,7 +27,7 @@ void ShoppingBasket::addProduct(Product<std::string, double> &product) {
 }
 
 /**
- * @brief Displays the contents of the shopping basket.
+ * @brief Displays the contents of the shopping basket
  */
 void ShoppingBasket::displayBasket() const {
     std::cout << "Shopping basket:\n";

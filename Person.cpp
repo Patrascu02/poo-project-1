@@ -127,7 +127,7 @@ void site_Employee::performAction() const {
 }
 
 /**
- * @class shop_Employee
+ * @class shop_Employee.
  * @brief Represents a shop employee in the store management system.
  */
 shop_Employee::shop_Employee(const std::string &name, const std::string &shop_Employee_username,

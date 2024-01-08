@@ -90,7 +90,7 @@ public:
         return *this;
     }
     /**
-    * @brief Copy constructor for the Product class
+    * @brief Copy constructor for the Product class.
     */
     Product(const Product &other)
             :id(other.id) ,name(other.name), size(other.size), sportType(other.sportType), price(other.price) {}
