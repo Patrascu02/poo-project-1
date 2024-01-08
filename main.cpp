@@ -5,9 +5,9 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "../Headers/ShoppingBasket.h"
-#include "../cmake-build-debug/product.h"
-#include "../cmake-build-debug/Person.h"
+#include "Headers/ShoppingBasket.h"
+#include "cmake-build-debug/product.h"
+#include "cmake-build-debug/Person.h"
 
 
 
