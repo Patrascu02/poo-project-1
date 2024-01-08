@@ -93,7 +93,7 @@ public:
     * @brief Copy constructor for the Product class
     */
     Product(const Product &other)
-            :id(id) ,name(other.name), size(other.size), sportType(other.sportType), price(other.price) {}
+            :id(other.id) ,name(other.name), size(other.size), sportType(other.sportType), price(other.price) {}
     /**
      * @brief Output stream operator override
      */

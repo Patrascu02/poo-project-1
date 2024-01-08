@@ -120,6 +120,7 @@ int main() {
                         if (foundProduct != nullptr) {
                            products.erase(std::remove(products.begin(),products.end(),foundProduct));
                             Product<std::string, double>::decreaseInstanceCount();
+
                         } else {
                             std::cout << "No matching ID's\n";
                         }
@@ -194,6 +195,9 @@ int main() {
 
     for (const auto &person: people) {
         delete person;
+    }
+    for (const auto& product : products) {
+        delete product;
     }
 
     std::cout << "--------------------------------------------" << std::endl;
