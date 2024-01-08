@@ -18,13 +18,6 @@ ShoppingBasket::ShoppingBasket(const ShoppingBasket &other) : products(other.pro
     // No additional implementation is needed here, as the initializer list handles everything.
 }
 
-/**
- * @brief Adds a product to the shopping basket.
- * @param product The product to add to the basket.
- */
-void ShoppingBasket::addProduct(Product<std::string, double> &product) {
-    products.push_back(product);
-}
 ShoppingBasket& ShoppingBasket::operator=(const ShoppingBasket &other) {
     if (this != &other) {
         products=other.products;

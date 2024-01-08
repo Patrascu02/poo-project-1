@@ -31,11 +31,7 @@ public:
      */
     ~ShoppingBasket() = default;
 
-    /**
-     * @brief Adds a product to the shopping basket.
-     * @param product Product to be added to the basket
-     */
-    void addProduct(Product<std::string, double> &product);
+
 
     /**
      * @brief Displays the contents of the shopping basket
