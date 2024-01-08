@@ -3,7 +3,7 @@
  * @brief Implementation of the ShoppingBasket class.
  */
 
-#include "shoppingbasket.h"
+#include "ShoppingBasket.h"
 
 /**
  * @class ShoppingBasket
@@ -25,6 +25,7 @@ ShoppingBasket::ShoppingBasket(const ShoppingBasket &other) : products(other.pro
 void ShoppingBasket::addProduct(Product<std::string, double> &product) {
     products.push_back(product);
 }
+
 
 /**
  * @brief Displays the contents of the shopping basket

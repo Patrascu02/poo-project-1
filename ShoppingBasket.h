@@ -41,6 +41,8 @@ public:
      * @brief Displays the contents of the shopping basket
      */
     void displayBasket() const;
+
+
 };
 
 #endif //OOP_SHOPPINGBASKET_H

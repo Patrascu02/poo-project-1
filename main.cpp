@@ -193,10 +193,10 @@ int main() {
     }
     // Deleting allocated memory for dynamically created objects
 
-    for (const auto &person: people) {
+    for (const auto* const person: people) {
         delete person;
     }
-    for (const auto& product : products) {
+    for (const auto* const product : products) {
         delete product;
     }
 
