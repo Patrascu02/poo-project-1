@@ -50,9 +50,10 @@ class Product {
 private:
     const T id;
     const T name;
+    P price;
     const T size;
     const T sportType;
-    P price;
+
     static int instanceCount;
     //Static atribute for counting objects of type Product
 

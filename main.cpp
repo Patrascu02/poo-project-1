@@ -6,7 +6,6 @@
 #include <vector>
 #include <algorithm>
 #include "product.h"
-#include "ShoppingBasket.h"
 #include "Person.h"
 
 /**
@@ -60,8 +59,8 @@ int main() {
         // Variables for user input and product handling
         std :: string ID;
         std :: string SIZE;
-        std :: string SPORT;
-        std :: string PRODUCT;
+        std :: string SPORTtype;
+        std :: string NaMe;
         double PRICE;
         int number;
         int i;
@@ -151,11 +150,11 @@ int main() {
                         for(i=1;i<=number;i++)
                         {
                             std :: cout <<"ID:";std::cin>>ID;
-                            std :: cout <<"PRODUCT:";std::cin>>PRODUCT;
+                            std :: cout <<"PRODUCT:";std::cin>>NaMe;
                             std :: cout <<"PRICE:";std::cin>>PRICE;
                             std :: cout <<"SIZE:";std::cin>>SIZE;
-                            std :: cout <<"SPORT:";std::cin>>SPORT;
-                            products.push_back(new Product(ID,PRODUCT,PRICE,SIZE,SPORT));
+                            std :: cout <<"SPORT:";std::cin>>SPORTtype;
+                            products.push_back(new Product(ID,NaMe,PRICE,SIZE,SPORTtype));
                         }
                         break;
                     case 5:

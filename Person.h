@@ -114,7 +114,7 @@ public:
      * @brief Copy constructor for Client.
      * @param other The Client object to copy.
      */
-    Client(const Client &other);
+    [[maybe_unused]] Client(const Client &other);
 
     /**
      * @brief Assignment operator for Client.
@@ -184,7 +184,7 @@ public:
      * @brief Copy constructor for site_Employee.
      * @param other The site_Employee object to copy.
      */
-    site_Employee(const site_Employee &other);
+    [[maybe_unused]] site_Employee(const site_Employee &other);
 
     /**
      * @brief Assignment operator for site_Employee.
@@ -248,7 +248,7 @@ public:
      * @brief Copy constructor for shop_Employee.
      * @param other The shop_Employee object to copy.
      */
-    shop_Employee(const shop_Employee &other);
+    [[maybe_unused]] shop_Employee(const shop_Employee &other);
 
     /**
      * @brief Assignment operator for shop_Employee.

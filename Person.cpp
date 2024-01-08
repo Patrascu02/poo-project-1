@@ -45,7 +45,7 @@ Client::Client(const std::string &name, const std::string &username, const std::
     }
 }
 
-Client::Client(const Client &other)
+[[maybe_unused]] Client::Client(const Client &other)
         : Person(other), shoppingBasket(other.shoppingBasket), username(other.username), password(other.password) {}
 
 Client &Client::operator=(const Client &other) {
@@ -58,7 +58,7 @@ Client &Client::operator=(const Client &other) {
     return *this;
 }
 
-void Client::addProductToBasket(Product<std::string, double> product) {
+[[maybe_unused]]void Client:: addProductToBasket(Product<std::string, double> product) {
     shoppingBasket.addProduct(product);
 }
 
@@ -93,7 +93,7 @@ site_Employee::site_Employee(const std::string &name, const std::string &site_em
     }
 }
 
-site_Employee::site_Employee(const site_Employee &other)
+[[maybe_unused]] site_Employee::site_Employee(const site_Employee &other)
         : Person(other), site_employee_id(other.site_employee_id),
           site_employee_password(other.site_employee_password), role(other.role) {}
 
@@ -139,7 +139,7 @@ shop_Employee::shop_Employee(const std::string &name, const std::string &shop_Em
     }
 }
 
-shop_Employee::shop_Employee(const shop_Employee &other)
+[[maybe_unused]] shop_Employee::shop_Employee(const shop_Employee &other)
         : Person(other), shop_Employee_username(other.shop_Employee_username),
           password(other.password), shop_location(other.shop_location) {}
 
